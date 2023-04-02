@@ -12,6 +12,7 @@ return [
     'urlshorted' => "URL Shorted",
     'shorturl' => "Short URL",
     'placeholder' => "Your URL ...",
+    'logout' => "Logout",
 
 
 ];

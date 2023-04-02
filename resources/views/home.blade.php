@@ -48,7 +48,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$link->url}}</td>
-                                <td><a href="{{route('short',$link->url)}}"  target="_blank" > {{$link->url_shorted}} </a></td>
+                                <td><a href="{{route('short',$link->id)}}"  target="_blank" > {{$link->url_shorted}} </a></td>
                                 
                                 <td>
                                 <form action="{{ route('links.destroy',$link->id) }}" method="POST">

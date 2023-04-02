@@ -16,5 +16,11 @@ return [
     'failed' => 'Login ou mot de passe incorrect.',
     'password' => 'Le mot de passe et incorrect.',
     'throttle' => 'Plusieurs tentatives d accés. Essayez dans :seconds seconds.',
+    'login' => 'Nom utilisateur',
+    'email' => 'Email',
+    'password' => 'Mot de passe',
+    'name' => 'Nom',
+    'register' => "S'enregistrer",
+    'confirm' => "Confirmer le mot de passe",
 
 ];
