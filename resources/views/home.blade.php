@@ -12,15 +12,21 @@
 
         <div class="text-center">
 
-            <h2 class=" mt-3">Tape URL and click ShortURL</h2>
+            <h2 class=" mt-3">{{__('contenu.slogan2')}}</h2>
 
             <div class="mx-5">
 
+                <form action="{{ route('links.store') }}" method="post">
 
-               <div class="input-group mb-3 mt-4">
-                  <input type="text" class="form-control" placeholder="Your URL ..." aria-label="Recipient's username" aria-describedby="button-addon2">
-                  <button class="btn btn-success border-rad" type="button" id="button-addon2">Short URL</button>
-                </div>
+                    @csrf
+                    <div class="input-group mb-3 mt-4">
+                       <input type="text" class="form-control" placeholder="{{{__('contenu.placeholder')}}}" name="url">
+                       <button class="btn btn-success border-rad" type="submit" id="button-add">{{__('contenu.shorturl')}}</button>
+                    </div>
+                    @error('url')
+                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                     @enderror
+                </form>
                 
 
             </div>
@@ -31,26 +37,31 @@
                         <thead class="thead-dark" >
                             <tr>
                                 <th>#</th>
-                                <th>url</th>
-                                <th>URL Shorted</th>
+                                <th>URL</th>
+                                <th>{{__('contenu.urlshorted')}}</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                           
+                            @foreach($links as $link)
                             <tr>
-                                <td>1</td>
-                                <td>www.google.com</td>
-                                <td>localhost/xvc5F</td>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$link->url}}</td>
+                                <td><a href="{{route('short',$link->url)}}"  target="_blank" > {{$link->url_shorted}} </a></td>
                                 
                                 <td>
-                                    
-                                        <a href="#" ><i class="fa fa-edit text-success fa-2x"></i></a>
-                                        <a href="#" ><i class="fa fa-trash text-danger fa-2x"></i></a>
-                                   
+                                <form action="{{ route('links.destroy',$link->id) }}" method="POST">
+                                @csrf
+
+                                    @method('DELETE')
+                                        <!-- <a href="#" ><i class="fa fa-edit text-success fa-2x"></i></a> -->
+                                        <button type="submit" class="btn btn-link" {{ auth()->user()->id === $link->user_id ? "" : "disabled" }} ><i class="fa fa-trash text-danger fa-2x"></i></button>
+                                </form>  
                                 </td>
                             </tr>
                             
-                           
+                           @endforeach
                             
                             
                         </tbody>

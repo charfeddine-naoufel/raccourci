@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\LangController;
+use App\Http\Controllers\LinkController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LinkController::class, 'welcome'])->name('links.welcome');
+Route::get('lang/change', [LangController::class, 'change'])->name('changeLang');
+Route::get('/short/{link}', [LinkController::class, 'createlog'])->name('short');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('links', LinkController::class);
+});
+

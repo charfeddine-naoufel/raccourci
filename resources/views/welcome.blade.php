@@ -31,16 +31,27 @@
 <body class="antialiased ">
     <nav class="navbar navbar-dark bg-dark ">
         <a class="navbar-brand" href="#">Naoufel Charfeddine</a>
+        <div class="form-group mb-2">
+                        <label for="langue" class="sr-only">Lang</label>
+                        <select class="form-control-sm  changeLang">
+
+                            <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English</option>
+
+                            <option value="fr" {{ session()->get('locale') == 'fr' ? 'selected' : '' }}>Français</option>
+
+
+                        </select>
+                    </div>
         <span class="navbar-text ">
             @if (Route::has('login'))
             <div class="hidden fixed top-0 right-0 px-6 py-3 sm:block">
                 @auth
-                <a href="{{ url('/home') }}" type="button" class="btn btn-dark">Home</a>
+                <a href="{{ url('/home') }}" type="button" class="btn btn-dark">{{__('contenu.home')}}</a>
                 @else
-                <a href="{{ route('login') }}" type="button" class="btn btn-dark">Log in</a>
+                <a href="{{ route('login') }}" type="button" class="btn btn-dark">{{__('contenu.login')}}</a>
 
                 @if (Route::has('register'))
-                <a href="{{ route('register') }}" type="button" class="btn btn-dark">Register</a>
+                <a href="{{ route('register') }}" type="button" class="btn btn-dark">{{__('contenu.register')}}</a>
                 @endif
                 @endauth
             </div>
@@ -52,31 +63,24 @@
 
         <div class=" mx-auto sm:px-6   contenu">
 <div class="container py-5">
-<h1 class="text-center text-light mb-4"> Application web de genération de raccourci URL</h1>
+<h1 class="text-center text-light mb-4"> {{ __('contenu.slogan')}}</h1>
 <table class="table table-stripped table table-bordered text-light ">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">S. No.</th>
                     <th scope="col">URL</th>
-                    <th scope="col">URL Shorted</th>
+                    <th scope="col">{{__('contenu.urlshorted')}}</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach($links as $link)
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Ajay</td>
-                    <td>Patna</td>
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <td> {{$link->url}}</td>
+                    <td><a href="{{route('short',$link->id)}}"  target="_blank" > {{$link->url_shorted}} </a></td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Rahul</td>
-                    <td>Chandigarh</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Parush</td>
-                    <td>Kolkata</td>
-                </tr>
+                
+                @endforeach
             </tbody>
         </table>
 </div>
@@ -88,6 +92,17 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+  
+            var url = "{{ route('changeLang') }}";
+        
+            $(".changeLang").change(function(){
+        
+                window.location.href = url + "?lang="+ $(this).val();
+            
+            });
+ 
+    </script>
 </body>
 
 </html>
