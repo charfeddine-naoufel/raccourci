@@ -84,7 +84,7 @@ class LinkController extends Controller
      */
     public function createlog(Link $link)
     { 
-        $acces_time = Carbon::now();
+        $acces_time = Carbon::now()->toArray()['formatted'];
         $visited_link = $link->url;
         if (Auth::check())
         {
